@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.example.timer.ViewModel.ViewModel
 import com.example.timer.databinding.ActivityMainBinding
 import java.util.*
@@ -14,13 +15,14 @@ class MainActivity :AppCompatActivity() {
         lateinit var binding: ActivityMainBinding
     }
     private val TAG = "TAG"
-    private val viewmodel = ViewModel()
+    private lateinit var viewmodel: ViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        viewmodel = ViewModelProvider(this)[ViewModel::class.java]
         binding.btnStop.visibility = View.GONE
         initButton()
     }
@@ -32,6 +34,7 @@ class MainActivity :AppCompatActivity() {
             binding.btnPause.visibility = View.VISIBLE
             binding.btnStop.visibility = View.VISIBLE
         }
+
         binding.btnPause.setOnClickListener {
             viewmodel.timer?.cancel()
 
